@@ -1,3 +1,11 @@
+let s:plug = {
+    \ "plugs": get(g:, 'plugs', {})
+    \ }
+
+function! s:plug.is_installed(name)
+    return has_key(self.plugs, a:name) ? isdirectory(self.plugs[a:name].dir) : 0
+endfunction
+
 " See Also https://qiita.com/ahiruman5/items/4f3c845500c172a02935
 " 文字コード設定
 set encoding=utf-8
@@ -85,6 +93,7 @@ endif
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
 
+Plug 'tomasr/molokai'           " カラースキーム
 Plug 'scrooloose/nerdtree'      " ディレクトリツリー
 Plug 'itchyny/lightline.vim'    " ステータスラインをいい感じに
 Plug 'bronson/vim-trailing-whitespace'  " 末尾の不要文字をハイライト
@@ -97,3 +106,6 @@ set showmode " 現在のモードを表示
 set showcmd " 打ったコマンドをステータスラインの下に表示
 set ruler " ステータスラインの右側にカーソルの現在位置を表示する
 
+colorscheme molokai " カラースキームにmolokaiを設定する
+set t_Co=256 " iTerm2など既に256色環境なら無くても良い
+syntax enable " 構文に色を付ける
