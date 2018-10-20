@@ -36,7 +36,6 @@ nnoremap k gk
 nnoremap <down> gj
 nnoremap <up> gk
 
-set showmatch " 括弧の対応関係を一瞬表示する
 source $VIMRUNTIME/macros/matchit.vim " Vimの「%」を拡張する
 
 set wildmenu " コマンドモードの補完

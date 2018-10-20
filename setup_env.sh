@@ -1,7 +1,7 @@
-#!/usr/bin/bash
+#!/bin/bash
 
-sudo apt-get install zsh git -y
-chsh /usr/bin/zsh
+sudo apt-get install zsh -y
+chsh -s /usr/bin/zsh
 
 # zplug
 curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
