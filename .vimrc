@@ -1,10 +1,27 @@
-let s:plug = {
-    \ "plugs": get(g:, 'plugs', {})
-    \ }
+" Specify a directory for plugins
+" - For Neovim: ~/.local/share/nvim/plugged
+" - Avoid using standard Vim directory names like 'plugin'
+call plug#begin('~/.vim/plugged')
 
-function! s:plug.is_installed(name)
-    return has_key(self.plugs, a:name) ? isdirectory(self.plugs[a:name].dir) : 0
-endfunction
+Plug 'tomasr/molokai'           " カラースキーム
+Plug 'scrooloose/nerdtree'      " ディレクトリツリー
+Plug 'itchyny/lightline.vim'    " ステータスラインをいい感じに
+Plug 'bronson/vim-trailing-whitespace'  " 末尾の不要文字をハイライト
+Plug 'Yggdroot/indentLine'      " インデントを見やすく
+Plug 'cohama/lexima.vim'        " 対応する括弧等を自動補完
+
+call plug#end()
+
+set laststatus=2 " ステータスラインを常に表示
+set showmode " 現在のモードを表示
+set showcmd " 打ったコマンドをステータスラインの下に表示
+set ruler " ステータスラインの右側にカーソルの現在位置を表示する
+
+colorscheme molokai " カラースキームにmolokaiを設定する
+set t_Co=256 " iTerm2など既に256色環境なら無くても良い
+syntax enable " 構文に色を付ける
+
+nnoremap <silent><C-e> :NERDTreeToggle<CR>    " Ctrl-eでNERDTreeを開閉
 
 " See Also https://qiita.com/ahiruman5/items/4f3c845500c172a02935
 " 文字コード設定
@@ -66,45 +83,3 @@ if &term =~ "xterm"
 
     inoremap <special> <expr> <Esc>[200~ XTermPasteBegin("")
 endif
-
-"" ファイル名表示
-"set statusline=%F
-"" 変更チェック表示
-"set statusline+=%m
-"" 読み込み専用かどうか表示
-"set statusline+=%r
-"" ヘルプページなら[HELP]と表示
-"set statusline+=%h
-"" プレビューウインドウなら[Prevew]と表示
-"set statusline+=%w
-"" これ以降は右寄せ表示
-"set statusline+=%=
-"" file encoding
-"" set statusline+=%{&fileencoding}
-"" 現在行数/全行数
-"set statusline+=%l/%L
-"" ステータスラインを常に表示(0:表示しない、1:2つ以上ウィンドウがある時だけ表示)
-"set laststatus=2
-
-
-" Specify a directory for plugins
-" - For Neovim: ~/.local/share/nvim/plugged
-" - Avoid using standard Vim directory names like 'plugin'
-call plug#begin('~/.vim/plugged')
-
-Plug 'tomasr/molokai'           " カラースキーム
-Plug 'scrooloose/nerdtree'      " ディレクトリツリー
-Plug 'itchyny/lightline.vim'    " ステータスラインをいい感じに
-Plug 'bronson/vim-trailing-whitespace'  " 末尾の不要文字をハイライト
-Plug 'Yggdroot/indentLine'      " インデントを見やすく
-
-call plug#end()
-
-set laststatus=2 " ステータスラインを常に表示
-set showmode " 現在のモードを表示
-set showcmd " 打ったコマンドをステータスラインの下に表示
-set ruler " ステータスラインの右側にカーソルの現在位置を表示する
-
-colorscheme molokai " カラースキームにmolokaiを設定する
-set t_Co=256 " iTerm2など既に256色環境なら無くても良い
-syntax enable " 構文に色を付ける
