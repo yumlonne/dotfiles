@@ -9,6 +9,8 @@ Plug 'itchyny/lightline.vim'    " ステータスラインをいい感じに
 Plug 'bronson/vim-trailing-whitespace'  " 末尾の不要文字をハイライト
 Plug 'Yggdroot/indentLine'      " インデントを見やすく
 Plug 'cohama/lexima.vim'        " 対応する括弧等を自動補完
+Plug 'Shougo/unite.vim'         " Unite
+Plug 'mattn/emmet-vim'          " HTML等の入力を補助 <C-y>,
 
 call plug#end()
 
@@ -83,3 +85,15 @@ if &term =~ "xterm"
 
     inoremap <special> <expr> <Esc>[200~ XTermPasteBegin("")
 endif
+
+" 存在しないディレクトリなら保存時に作成する
+augroup vimrc-auto-mkdir  " {{{
+  autocmd!
+  autocmd BufWritePre * call s:auto_mkdir(expand('<afile>:p:h'), v:cmdbang)
+  function! s:auto_mkdir(dir, force)  " {{{
+    if !isdirectory(a:dir) && (a:force ||
+    \    input(printf('"%s" does not exist. Create? [y/N]', a:dir)) =~? '^y\%[es]$')
+      call mkdir(iconv(a:dir, &encoding, &termencoding), 'p')
+    endif
+  endfunction  " }}}
+augroup END  " }}}

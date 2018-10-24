@@ -63,3 +63,6 @@ setopt inc_append_history
 # インクリメンタルからの検索
 bindkey "^R" history-incremental-search-backward
 bindkey "^S" history-incremental-search-forward
+
+# .zshrc.localがあればそっちも読み込む
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
