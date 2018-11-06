@@ -1,3 +1,12 @@
+" s:plug.is_installed
+let s:plug = {
+      \ "plugs": get(g:, 'plugs', {})
+      \ }
+
+function! s:plug.is_installed(name)
+  return has_key(self.plugs, a:name) ? isdirectory(self.plugs[a:name].dir) : 0
+endfunction
+
 " Specify a directory for plugins
 " - For Neovim: ~/.local/share/nvim/plugged
 " - Avoid using standard Vim directory names like 'plugin'
@@ -11,8 +20,44 @@ Plug 'Yggdroot/indentLine'      " インデントを見やすく
 Plug 'cohama/lexima.vim'        " 対応する括弧等を自動補完
 Plug 'Shougo/unite.vim'         " Unite
 Plug 'mattn/emmet-vim'          " HTML等の入力を補助 <C-y>,
+Plug 'w0rp/ale'                 " lint
+
+if has('lua')
+    Plug 'Shougo/neocomplete.vim'      " コードの自動補完
+    Plug 'Shougo/neosnippet'           " スニペットの自動補完
+    Plug 'Shougo/neosnippet-snippets'  " スニペット集
+
+    "----------------------------------------------------------
+    " neocomplete・neosnippetの設定
+    "----------------------------------------------------------
+
+    " Vim起動時にneocompleteを有効にする
+    let g:neocomplete#enable_at_startup = 1
+    " smartcase有効化. 大文字が入力されるまで大文字小文字の区別を無視する
+    let g:neocomplete#enable_smart_case = 1
+    " 3文字以上の単語に対して補完を有効にする
+    let g:neocomplete#min_keyword_length = 3
+    " 区切り文字まで補完する
+    let g:neocomplete#enable_auto_delimiter = 1
+    " 1文字目の入力から補完のポップアップを表示
+    let g:neocomplete#auto_completion_start_length = 2
+
+    inoremap <expr><BS> neocomplete#smart_close_popup()."<C-h>"
+    inoremap <expr><Tab> pumvisible() ? neocomplete#complete_common_string() : "\<Tab>"
+
+    " for snippets
+    let g:neosnippet#snippets_directory = "~/.vim/snippets"
+    imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+    smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+endif
 
 call plug#end()
+
+" 行末でのみ括弧を補完する
+call lexima#add_rule({'at': '\%#.*[-0-9a-zA-Z_,:]', 'char': '{', 'input': '{'})
+call lexima#add_rule({'at': '\%#.*[-0-9a-zA-Z_,:]', 'char': '(', 'input': '('})
+call lexima#add_rule({'at': '\%#.*[-0-9a-zA-Z_,:]', 'char': '"', 'input': '"'})
+call lexima#add_rule({'at': '\%#.*[-0-9a-zA-Z_,:]', 'char': "'", 'input': "'" })
 
 set laststatus=2 " ステータスラインを常に表示
 set showmode " 現在のモードを表示
@@ -34,6 +79,7 @@ set fileencoding=utf-8 " 保存時の文字コード
 set fileencodings=ucs-boms,utf-8,euc-jp,cp932 " 読み込み時の文字コードの自動判別. 左側が優先される
 set fileformats=unix,dos,mac " 改行コードの自動判別. 左側が優先される
 set ambiwidth=double " □や○文字が崩れる問題を解決
+set nocompatible " 方向キーでアルファベットが入力されないようにする
 
 set expandtab " タブ入力を複数の空白入力に置き換える
 set tabstop=4 " 画面上でタブ文字が占める幅
@@ -56,6 +102,7 @@ nnoremap <down> gj
 nnoremap <up> gk
 
 source $VIMRUNTIME/macros/matchit.vim " Vimの「%」を拡張する
+set backspace=indent,eol,start " backspaceが効かない問題
 
 set wildmenu " コマンドモードの補完
 set history=5000 " 保存するコマンド履歴の数
