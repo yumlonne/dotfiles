@@ -21,6 +21,7 @@ Plug 'cohama/lexima.vim'        " 対応する括弧等を自動補完
 Plug 'Shougo/unite.vim'         " Unite
 Plug 'mattn/emmet-vim'          " HTML等の入力を補助 <C-y>,
 Plug 'w0rp/ale'                 " lint
+Plug 'ConradIrwin/vim-bracketed-paste'  " paste時にautoindentを無効にする
 
 if has('lua')
     Plug 'Shougo/neocomplete.vim'      " コードの自動補完
@@ -43,7 +44,10 @@ if has('lua')
     let g:neocomplete#auto_completion_start_length = 2
 
     inoremap <expr><BS> neocomplete#smart_close_popup()."<C-h>"
-    inoremap <expr><Tab> pumvisible() ? neocomplete#complete_common_string() : "\<Tab>"
+    inoremap <silent> <CR> <C-r>=<SID>my_cr_function()
+    function! s:my_cr_function()
+        return pumvisible() ? "\<C-y>" : "\<CR>"
+    endfunction
 
     " for snippets
     let g:neosnippet#snippets_directory = "~/.vim/snippets"
@@ -58,6 +62,12 @@ call lexima#add_rule({'at': '\%#.*[-0-9a-zA-Z_,:]', 'char': '{', 'input': '{'})
 call lexima#add_rule({'at': '\%#.*[-0-9a-zA-Z_,:]', 'char': '(', 'input': '('})
 call lexima#add_rule({'at': '\%#.*[-0-9a-zA-Z_,:]', 'char': '"', 'input': '"'})
 call lexima#add_rule({'at': '\%#.*[-0-9a-zA-Z_,:]', 'char': "'", 'input': "'" })
+" Tabキーで括弧を抜ける
+call lexima#add_rule({'char': '<TAB>', 'at': '\%#)', 'leave': 1})
+call lexima#add_rule({'char': '<TAB>', 'at': '\%#"', 'leave': 1})
+call lexima#add_rule({'char': '<TAB>', 'at': '\%#''', 'leave': 1})
+call lexima#add_rule({'char': '<TAB>', 'at': '\%#]', 'leave': 1})
+call lexima#add_rule({'char': '<TAB>', 'at': '\%#}', 'leave': 1})
 
 set laststatus=2 " ステータスラインを常に表示
 set showmode " 現在のモードを表示
