@@ -1,4 +1,5 @@
 " s:plug.is_installed
+
 let s:plug = {
       \ "plugs": get(g:, 'plugs', {})
       \ }
@@ -11,7 +12,6 @@ endfunction
 " - For Neovim: ~/.local/share/nvim/plugged
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
-
 Plug 'tomasr/molokai'           " カラースキーム
 Plug 'scrooloose/nerdtree'      " ディレクトリツリー
 Plug 'itchyny/lightline.vim'    " ステータスラインをいい感じに
@@ -41,13 +41,25 @@ if has('lua')
     " 区切り文字まで補完する
     let g:neocomplete#enable_auto_delimiter = 1
     " 1文字目の入力から補完のポップアップを表示
-    let g:neocomplete#auto_completion_start_length = 2
+    let g:neocomplete#auto_completion_start_length = 1
 
-    inoremap <expr><BS> neocomplete#smart_close_popup()."<C-h>"
-    inoremap <silent> <CR> <C-r>=<SID>my_cr_function()
+    " Plugin key-mappings.
+    inoremap <expr><C-g>     neocomplete#undo_completion()
+    inoremap <expr><C-l>     neocomplete#complete_common_string()
+
+    " Recommended key-mappings.
+    " <CR>: close popup and save indent.
+    inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
     function! s:my_cr_function()
-        return pumvisible() ? "\<C-y>" : "\<CR>"
+      return neocomplete#smart_close_popup() . "\<CR>"
     endfunction
+    " <TAB>: completion.
+    inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+    " <C-h>, <BS>: close popup and delete backword char.
+    inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+    inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+    inoremap <expr><C-y>  neocomplete#close_popup()
+    inoremap <expr><C-e>  neocomplete#cancel_popup()
 
     " for snippets
     let g:neosnippet#snippets_directory = "~/.vim/snippets"
@@ -60,14 +72,15 @@ call plug#end()
 " 行末でのみ括弧を補完する
 call lexima#add_rule({'at': '\%#.*[-0-9a-zA-Z_,:]', 'char': '{', 'input': '{'})
 call lexima#add_rule({'at': '\%#.*[-0-9a-zA-Z_,:]', 'char': '(', 'input': '('})
+call lexima#add_rule({'at': '\%#.*[-0-9a-zA-Z_,:]', 'char': '[', 'input': ']'})
 call lexima#add_rule({'at': '\%#.*[-0-9a-zA-Z_,:]', 'char': '"', 'input': '"'})
 call lexima#add_rule({'at': '\%#.*[-0-9a-zA-Z_,:]', 'char': "'", 'input': "'" })
 " Tabキーで括弧を抜ける
-call lexima#add_rule({'char': '<TAB>', 'at': '\%#)', 'leave': 1})
-call lexima#add_rule({'char': '<TAB>', 'at': '\%#"', 'leave': 1})
-call lexima#add_rule({'char': '<TAB>', 'at': '\%#''', 'leave': 1})
-call lexima#add_rule({'char': '<TAB>', 'at': '\%#]', 'leave': 1})
-call lexima#add_rule({'char': '<TAB>', 'at': '\%#}', 'leave': 1})
+" call lexima#add_rule({'char': '<TAB>', 'at': '\%#)', 'leave': 1})
+" call lexima#add_rule({'char': '<TAB>', 'at': '\%#"', 'leave': 1})
+" call lexima#add_rule({'char': '<TAB>', 'at': '\%#''', 'leave': 1})
+" call lexima#add_rule({'char': '<TAB>', 'at': '\%#]', 'leave': 1})
+" call lexima#add_rule({'char': '<TAB>', 'at': '\%#}', 'leave': 1})
 
 set laststatus=2 " ステータスラインを常に表示
 set showmode " 現在のモードを表示
