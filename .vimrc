@@ -1,5 +1,8 @@
-" s:plug.is_installed
+" 文字コード設定
+set encoding=utf-8
+scriptencoding utf-8
 
+" s:plug.is_installed
 let s:plug = {
       \ "plugs": get(g:, 'plugs', {})
       \ }
@@ -15,6 +18,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'tomasr/molokai'           " カラースキーム
 Plug 'scrooloose/nerdtree'      " ディレクトリツリー
 Plug 'itchyny/lightline.vim'    " ステータスラインをいい感じに
+Plug 'itchyny/vim-gitbranch'    " ステータスラインにbranchを表示
 Plug 'bronson/vim-trailing-whitespace'  " 末尾の不要文字をハイライト
 Plug 'Yggdroot/indentLine'      " インデントを見やすく
 Plug 'cohama/lexima.vim'        " 対応する括弧等を自動補完
@@ -23,7 +27,9 @@ Plug 'mattn/emmet-vim'          " HTML等の入力を補助 <C-y>,
 Plug 'w0rp/ale'                 " lint
 Plug 'ConradIrwin/vim-bracketed-paste'  " paste時にautoindentを無効にする
 Plug 'airblade/vim-gitgutter'   " HEADとの差分を表示
-
+Plug 'Shougo/unite.vim'         " Unite
+Plug 'kmnk/vim-unite-giti'      " Unite git plugin
+Plug 'tpope/vim-fugitive'       " vimからgitを使う
 if has('lua')
     Plug 'Shougo/neocomplete.vim'      " コードの自動補完
     Plug 'Shougo/neosnippet'           " スニペットの自動補完
@@ -70,6 +76,8 @@ endif
 
 call plug#end()
 
+" plugin設定
+
 " 行末でのみ括弧を補完する
 call lexima#add_rule({'at': '\%#.*[-0-9a-zA-Z_,:]', 'char': '{', 'input': '{'})
 call lexima#add_rule({'at': '\%#.*[-0-9a-zA-Z_,:]', 'char': '(', 'input': '('})
@@ -83,6 +91,24 @@ call lexima#add_rule({'at': '\%#.*[-0-9a-zA-Z_,:]', 'char': "'", 'input': "'" })
 " call lexima#add_rule({'char': '<TAB>', 'at': '\%#]', 'leave': 1})
 " call lexima#add_rule({'char': '<TAB>', 'at': '\%#}', 'leave': 1})
 
+" unite設定
+nnoremap <silent> @ugm :<C-u>Unite giti<CR>
+nnoremap <silent> @ugg :<C-u>Unite giti/grep<CR>
+nnoremap <silent> @ugb :<C-u>Unite giti/branch<CR>
+nnoremap <silent> @ugs :<C-u>Unite giti/status<CR>
+nnoremap <silent> @ugl :<C-u>Unite giti/log<CR>
+
+" statusline設定
+let g:lightline = {
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'gitbranch#name'
+      \ },
+      \ }
+
 set laststatus=2 " ステータスラインを常に表示
 set showmode " 現在のモードを表示
 set showcmd " 打ったコマンドをステータスラインの下に表示
@@ -94,11 +120,6 @@ syntax enable " 構文に色を付ける
 
 nnoremap <silent><C-e> :NERDTreeToggle<CR>    " Ctrl-eでNERDTreeを開閉
 set updatetime=100  " vim-gitgutterの更新間隔
-
-" See Also https://qiita.com/ahiruman5/items/4f3c845500c172a02935
-" 文字コード設定
-set encoding=utf-8
-scriptencoding utf-8
 
 set fileencoding=utf-8 " 保存時の文字コード
 set fileencodings=ucs-boms,utf-8,euc-jp,cp932 " 読み込み時の文字コードの自動判別. 左側が優先される
