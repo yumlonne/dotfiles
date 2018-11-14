@@ -91,6 +91,9 @@ call lexima#add_rule({'at': '\%#.*[-0-9a-zA-Z_,:]', 'char': "'", 'input': "'" })
 " call lexima#add_rule({'char': '<TAB>', 'at': '\%#]', 'leave': 1})
 " call lexima#add_rule({'char': '<TAB>', 'at': '\%#}', 'leave': 1})
 
+" 末尾スペースのハイライトを無視
+let g:extra_whitespace_ignored_filetypes = ['unite', 'gitcommit']
+
 " unite設定
 nnoremap <silent> @ugm :<C-u>Unite giti<CR>
 nnoremap <silent> @ugg :<C-u>Unite giti/grep<CR>
