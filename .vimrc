@@ -22,6 +22,7 @@ Plug 'Shougo/unite.vim'         " Unite
 Plug 'mattn/emmet-vim'          " HTML等の入力を補助 <C-y>,
 Plug 'w0rp/ale'                 " lint
 Plug 'ConradIrwin/vim-bracketed-paste'  " paste時にautoindentを無効にする
+Plug 'airblade/vim-gitgutter'   " HEADとの差分を表示
 
 if has('lua')
     Plug 'Shougo/neocomplete.vim'      " コードの自動補完
@@ -92,6 +93,7 @@ set t_Co=256 " iTerm2など既に256色環境なら無くても良い
 syntax enable " 構文に色を付ける
 
 nnoremap <silent><C-e> :NERDTreeToggle<CR>    " Ctrl-eでNERDTreeを開閉
+set updatetime=100  " vim-gitgutterの更新間隔
 
 " See Also https://qiita.com/ahiruman5/items/4f3c845500c172a02935
 " 文字コード設定
