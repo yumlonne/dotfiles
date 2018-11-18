@@ -81,7 +81,7 @@ call plug#end()
 " 行末でのみ括弧を補完する
 call lexima#add_rule({'at': '\%#.*[-0-9a-zA-Z_,:]', 'char': '{', 'input': '{'})
 call lexima#add_rule({'at': '\%#.*[-0-9a-zA-Z_,:]', 'char': '(', 'input': '('})
-call lexima#add_rule({'at': '\%#.*[-0-9a-zA-Z_,:]', 'char': '[', 'input': ']'})
+call lexima#add_rule({'at': '\%#.*[-0-9a-zA-Z_,:]', 'char': '[', 'input': '['})
 call lexima#add_rule({'at': '\%#.*[-0-9a-zA-Z_,:]', 'char': '"', 'input': '"'})
 call lexima#add_rule({'at': '\%#.*[-0-9a-zA-Z_,:]', 'char': "'", 'input': "'" })
 " Tabキーで括弧を抜ける
@@ -95,11 +95,11 @@ call lexima#add_rule({'at': '\%#.*[-0-9a-zA-Z_,:]', 'char': "'", 'input': "'" })
 let g:extra_whitespace_ignored_filetypes = ['unite', 'gitcommit']
 
 " unite設定
-nnoremap <silent> @ugm :<C-u>Unite giti<CR>
-nnoremap <silent> @ugg :<C-u>Unite giti/grep<CR>
-nnoremap <silent> @ugb :<C-u>Unite giti/branch<CR>
-nnoremap <silent> @ugs :<C-u>Unite giti/status<CR>
-nnoremap <silent> @ugl :<C-u>Unite giti/log<CR>
+nnoremap <silent> <C-i>g :<C-u>Unite giti<CR>
+nnoremap <silent> <C-i><C-g>g :<C-u>Unite giti/grep<CR>
+nnoremap <silent> <C-i><C-g>b :<C-u>Unite giti/branch<CR>
+nnoremap <silent> <C-i><C-g>s :<C-u>Unite giti/status<CR>
+nnoremap <silent> <C-i><C-g>l :<C-u>Unite giti/log<CR>
 
 " statusline設定
 let g:lightline = {
