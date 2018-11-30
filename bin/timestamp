@@ -1,0 +1,11 @@
+#!/usr/bin/env perl
+use Term::ANSIColor;
+
+while(<>) {
+    chomp (my $date = `date "+%Y-%m-%d %H:%M:%S"`);
+    print '[';
+    print color 'yellow';
+    print $date;
+    print color 'reset';
+    print "] $_";
+}

@@ -1,0 +1,53 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+use utf8;
+
+use Getopt::Long;
+use List::Util qw(reduce);
+
+my $delimiter = ',';
+my $noheader = 0;
+my $union = 0;
+
+GetOptions(
+    'delimiter=s' => \$delimiter,
+    'noheader'    => \$noheader,
+    'union'       => \$union,
+);
+$delimiter = "\t" if $delimiter =~ /tab/i;
+
+if ($noheader) {
+    my @contents;
+    while (<>) {
+        chomp;
+        my @items = split /$delimiter/;
+        my $content = reduce { "$a,$b" } map { qq|"$_"| } @items;
+        push @contents, "[$content]";
+    }
+
+    my $content_delimiter = $union ? "," : "\n";
+    my $contents_json = reduce { sprintf '%s%s%s' , $a, $content_delimiter, $b } @contents;
+    $contents_json = "[$contents_json]\n" if $union;
+    print $contents_json;
+    exit;
+}
+
+# with header
+
+chomp(my $header = <>);
+my @header = split /$delimiter/, $header;
+my @contents;
+
+while (<>) {
+    chomp;
+    my @items = split /$delimiter/;
+    my $content = reduce { "$a,$b" } map { qq|"$header[$_->[0]]":"$_->[1]"| } map { [$_, $items[$_]] } 0..$#items;
+    push @contents, "{$content}";
+
+}
+
+my $content_delimiter = $union ? "," : "\n";
+my $contents_json = reduce { sprintf '%s%s%s' , $a, $content_delimiter, $b } @contents;
+$contents_json = "[$contents_json]\n" if $union;
+print $contents_json;

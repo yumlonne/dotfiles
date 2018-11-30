@@ -1,0 +1,21 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+use utf8;
+
+use Getopt::Long;
+
+my $delimiter = ",";
+my $ignore_first_space = 0;
+
+GetOptions(
+    'delimiter=s' => \$delimiter,
+    'ignore-first-space' => \$ignore_first_space,
+);
+$delimiter = "\t" if $delimiter =~ /tab/i;
+
+while (<>) {
+    s/\s+(.*)/$1/ if $ignore_first_space;
+    s/ +/$delimiter/g;
+    print;
+}

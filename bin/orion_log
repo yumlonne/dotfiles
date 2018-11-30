@@ -1,0 +1,1 @@
+tailf /var/log/plack/orion.error.log | ~/bin/timestamp

@@ -1,0 +1,5 @@
+git com;
+git pull;
+git branch | cut -c3- | xargs git branch -d;
+
+git branch;

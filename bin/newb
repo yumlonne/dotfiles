@@ -1,0 +1,11 @@
+git checkout master;
+git pull;
+
+echo -n 'branch > ';
+read branch;
+echo -n 'title  > ';
+read title;
+
+git checkout -b $branch;
+git commit --allow-empty -m "$title";
+git push origin $branch;

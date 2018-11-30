@@ -1,0 +1,4 @@
+#!/usr/bin/perl
+my $sum = 0;
+$sum += $_ while <>;
+print "$sum\n";
