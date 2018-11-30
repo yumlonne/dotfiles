@@ -43,8 +43,8 @@ if has('lua')
     let g:neocomplete#enable_at_startup = 1
     " smartcase有効化. 大文字が入力されるまで大文字小文字の区別を無視する
     let g:neocomplete#enable_smart_case = 1
-    " 3文字以上の単語に対して補完を有効にする
-    let g:neocomplete#min_keyword_length = 3
+    " 2文字以上の単語に対して補完を有効にする
+    let g:neocomplete#min_keyword_length = 2
     " 区切り文字まで補完する
     let g:neocomplete#enable_auto_delimiter = 1
     " 1文字目の入力から補完のポップアップを表示
