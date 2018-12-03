@@ -6,6 +6,6 @@ my $color = color(shift @ARGV) // color('yellow');
 my $reset = color('reset');
 
 while (<>) {
-    s/$keyword/$color$keyword$reset/g;
+    s/($keyword)/$color$1$reset/g;
     print;
 }
