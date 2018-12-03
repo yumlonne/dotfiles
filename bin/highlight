@@ -1,0 +1,11 @@
+#!/usr/bin/perl
+use Term::ANSIColor;
+
+my $keyword = shift @ARGV or die 'keyword not given';
+my $color = color(shift @ARGV) // color('yellow');
+my $reset = color('reset');
+
+while (<>) {
+    s/$keyword/$color$keyword$reset/g;
+    print;
+}
