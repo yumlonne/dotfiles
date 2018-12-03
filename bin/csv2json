@@ -7,14 +7,17 @@ use Getopt::Long;
 use List::Util qw(reduce);
 
 my $delimiter = ',';
+my $tsv       = 0;
 my $noheader = 0;
 my $union = 0;
 
 GetOptions(
     'delimiter=s' => \$delimiter,
+    'tsv'         => \$tsv,
     'noheader'    => \$noheader,
     'union'       => \$union,
 );
+$delimiter = "\t" if $tsv;
 $delimiter = "\t" if $delimiter =~ /tab/i;
 
 if ($noheader) {
