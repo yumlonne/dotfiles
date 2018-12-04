@@ -62,6 +62,4 @@ sub variance {
 sub std {
     my @data = @_;
     return sqrt variance(@data);
-    C
-
 }
