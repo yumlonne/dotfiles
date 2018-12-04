@@ -1,11 +1,20 @@
-git checkout master;
-git pull;
+#!/bin/zsh
 
-echo -n 'branch > ';
-read branch;
-echo -n 'title  > ';
-read title;
+git checkout master
+git pull
 
-git checkout -b $branch;
-git commit --allow-empty -m "$title";
-git push origin $branch;
+branch=$1
+title=$2
+
+if [ -z $branch ]; then
+    echo -n 'branch > '
+    read branch
+fi
+if [ -z $title ]; then
+    echo -n 'title  > '
+    read title
+fi
+
+git checkout -b $branch
+git commit --allow-empty -m "$title"
+git push origin $branch
