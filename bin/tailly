@@ -1,0 +1,21 @@
+#!/usr/bin/perl
+
+use List::Util qw(max min sum);
+
+my @data = <STDIN>;
+
+@ARGV = qw/max min avg/ if not @ARGV;
+for my $type (@ARGV) {
+    if ($type eq 'max') {
+        printf "MAX: %s", max @data;
+    }
+    elsif ($type eq 'min') {
+        printf "MAX: %s", min @data;
+    }
+    elsif ($type eq 'avg') {
+        printf "AVG: %s", sum(@data) / @data;
+    }
+    else {
+        warn "unknown option `$type`";
+    }
+}
