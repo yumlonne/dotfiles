@@ -4,16 +4,31 @@ use List::Util qw(max min sum);
 
 my @data = <STDIN>;
 
-@ARGV = qw/max min avg/ if not @ARGV;
+# '-'から始まるものはオプションとして扱う
+my %options;
+map { $options{$_} = 1 }
+map { /-(.*)/; $1; }
+grep { /^-/ } @ARGV;
+@ARGV = grep { not $_ =~ /^-/ } @ARGV;
+
+# 指定がなければ全部
+@ARGV = qw/sum cnt avg max min/ if not @ARGV;
+
 for my $type (@ARGV) {
     if ($type eq 'max') {
-        printf "MAX: %s", max @data;
+        printf $options{r} ? "%s": "MAX: %s", max @data;
     }
     elsif ($type eq 'min') {
         printf "MAX: %s", min @data;
     }
+    elsif ($type eq 'sum') {
+        printf "SUM: %s\n", sum @data;
+    }
+    elsif ($type eq 'cnt') {
+        printf "CNT: %s\n", scalar(@data);
+    }
     elsif ($type eq 'avg') {
-        printf "AVG: %s", sum(@data) / @data;
+        printf "AVG: %s\n", sum(@data) / @data;
     }
     else {
         warn "unknown option `$type`";
