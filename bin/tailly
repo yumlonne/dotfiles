@@ -5,32 +5,63 @@ use List::Util qw(max min sum);
 my @data = <STDIN>;
 
 # '-'から始まるものはオプションとして扱う
+# -r raw output
+# -a all
 my %options;
 map { $options{$_} = 1 }
 map { /-(.*)/; $1; }
 grep { /^-/ } @ARGV;
 @ARGV = grep { not $_ =~ /^-/ } @ARGV;
 
-# 指定がなければ全部
+
+@ARGV = qw/sum cnt avg max min var std/ if $options{a};
+
+# 指定がなければ通常パック
 @ARGV = qw/sum cnt avg max min/ if not @ARGV;
 
 for my $type (@ARGV) {
     if ($type eq 'max') {
-        printf $options{r} ? "%s": "MAX: %s", max @data;
+        print_res($type, max @data);
     }
     elsif ($type eq 'min') {
-        printf "MAX: %s", min @data;
+        print_res($type, min @data);
     }
     elsif ($type eq 'sum') {
-        printf "SUM: %s\n", sum @data;
+        print_res($type, sum @data);
     }
     elsif ($type eq 'cnt') {
-        printf "CNT: %s\n", scalar(@data);
+        print_res($type, scalar @data);
     }
     elsif ($type eq 'avg') {
-        printf "AVG: %s\n", sum(@data) / @data;
+        print_res($type, (sum @data) / @data);
+    }
+    elsif ($type eq 'var') { # variance 分散
+        print_res($type, variance(@data));
+    }
+    elsif ($type eq 'std') { # standard deviation 標準偏差
+        print_res($type, std(@data));
     }
     else {
         warn "unknown option `$type`";
     }
+}
+
+sub print_res {
+    my ($type, $res) = @_;
+    $res += 0;      # Str => Int
+    my $str = $options{r} ? "%s\n" : sprintf "%s: %s\n", uc($type), '%s';
+    printf($str, $res);
+}
+
+sub variance {
+    my @data = @_;
+    my $avg = (sum @data) / @data;
+    return (sum map { ($_ - $avg)**2 } @data) / @data;
+}
+
+sub std {
+    my @data = @_;
+    return sqrt variance(@data);
+    C
+
 }
