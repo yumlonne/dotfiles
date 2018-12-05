@@ -7,6 +7,7 @@ my @data = <STDIN>;
 # '-'から始まるものはオプションとして扱う
 # -r raw output
 # -a all
+# -n display number
 my %options;
 map { $options{$_} = 1 }
 map { /-(.*)/; $1; }
@@ -33,7 +34,8 @@ for my $type (@ARGV) {
         print_res($type, scalar @data);
     }
     elsif ($type eq 'avg') {
-        print_res($type, (sum @data) / @data);
+        my $avg = @data ? (sum @data) / @data : '-';
+        print_res($type, $avg);
     }
     elsif ($type eq 'var') { # variance 分散
         print_res($type, variance(@data));
@@ -48,13 +50,19 @@ for my $type (@ARGV) {
 
 sub print_res {
     my ($type, $res) = @_;
-    $res += 0;      # Str => Int
+    if ($options{n}) {
+        $res += 0;
+    }
+    else {
+        chomp $res;
+    }
     my $str = $options{r} ? "%s\n" : sprintf "%s: %s\n", uc($type), '%s';
     printf($str, $res);
 }
 
 sub variance {
     my @data = @_;
+    return '-' if not @data;
     my $avg = (sum @data) / @data;
     return (sum map { ($_ - $avg)**2 } @data) / @data;
 }
