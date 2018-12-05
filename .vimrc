@@ -101,6 +101,12 @@ nnoremap <silent> <C-i><C-g>b :<C-u>Unite giti/branch<CR>
 nnoremap <silent> <C-i><C-g>s :<C-u>Unite giti/status<CR>
 nnoremap <silent> <C-i><C-g>l :<C-u>Unite giti/log<CR>
 
+" INSERTモードでC-[hjkl]で移動できるようにする
+inoremap <C-h> <Left>
+inoremap <C-j> <Down>
+inoremap <C-k> <Up>
+inoremap <C-l> <Right>
+
 " statusline設定
 let g:lightline = {
       \ 'active': {
