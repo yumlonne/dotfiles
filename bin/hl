@@ -1,11 +1,16 @@
 #!/usr/bin/perl
 use Term::ANSIColor;
 
-my $keyword = shift @ARGV or die 'keyword not given';
-my $color = color(shift @ARGV or 'yellow');
 my $reset = color('reset');
 
-while (<>) {
-    s/($keyword)/$color$1$reset/g;
+while (<STDIN>) {
+    my $color = color('yellow');
+    for my $elem (@ARGV) {
+        if ($elem =~ /--color=('")?(.*)('")?/) {
+            $color = color($2);
+            next;
+        }
+        s/($elem)/$color$1$reset/g;
+    }
     print;
 }
