@@ -17,6 +17,7 @@ endfunction
 call plug#begin('~/.vim/plugged')
 Plug 'tomasr/molokai'           " カラースキーム
 Plug 'scrooloose/nerdtree'      " ディレクトリツリー
+Plug 'jistr/vim-nerdtree-tabs'  " nerdtreeをタブ間で共有
 Plug 'itchyny/lightline.vim'    " ステータスラインをいい感じに
 Plug 'itchyny/vim-gitbranch'    " ステータスラインにbranchを表示
 Plug 'bronson/vim-trailing-whitespace'  " 末尾の不要文字をハイライト
@@ -127,7 +128,11 @@ colorscheme molokai " カラースキームにmolokaiを設定する
 set t_Co=256 " iTerm2など既に256色環境なら無くても良い
 syntax enable " 構文に色を付ける
 
-nnoremap <silent><C-e> :NERDTreeToggle<CR>    " Ctrl-eでNERDTreeを開閉
+" Ctrl-eでNERDTreeを開閉
+nnoremap <silent><C-e> :NERDTreeTabsToggle<CR>
+" 他のバッファをすべて閉じた時にNERDTreeが開いていたらNERDTreeも一緒に閉じる。
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
 set updatetime=100  " vim-gitgutterの更新間隔
 
 set fileencoding=utf-8 " 保存時の文字コード
