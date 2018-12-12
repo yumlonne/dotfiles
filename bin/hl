@@ -6,8 +6,13 @@ my $reset = color('reset');
 while (<STDIN>) {
     my $color = color('yellow');
     for my $elem (@ARGV) {
+        $elem =~ s/^-c=?(.*)$/--color=$1/;
         if ($elem =~ /--color=('")?(.*)('")?/) {
-            $color = color($2);
+            my $color_code = $2;
+            if ($color_code =~ /^B(.*)/) {
+                $color_code = "$1 bold";
+            }
+            $color = color($color_code);
             next;
         }
         s/($elem)/$color$1$reset/g;
