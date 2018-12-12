@@ -1,5 +1,6 @@
-ln -s ~/dotfiles/.zshrc ~/.zshrc
-ln -s ~/dotfiles/.vimrc ~/.vimrc
-ln -s ~/dotfiles/.tmux.conf ~/.tmux.conf
+ln -nfs ~/dotfiles/.zshrc ~/.zshrc
+ln -nfs ~/dotfiles/.vimrc ~/.vimrc
+ln -nfs ~/dotfiles/.tmux.conf ~/.tmux.conf
 
-ln -s ~/dotfiles/bin ~/bin
+ln -nfs ~/dotfiles/bin ~/bin
+ln -nfs ~/dotfiles/vim_snippets ~/.vim/snippets

@@ -1,0 +1,59 @@
+snippet use
+    use strict;
+    use warnings;
+    use utf8;
+
+    ${0}
+
+snippet env
+    #!/usr/bin/env perl
+    use strict;
+    use warnings;
+    use utf8;
+
+    ${0}
+
+snippet pkg
+    package `expand('%:p:s?.*lib/??:r:gs?/?::?')`;
+    use strict;
+    use warnings;
+    use utf8;
+
+    ${0}
+
+    1;
+
+snippet spec
+    use strict;
+    use warnings;
+    use utf8;
+
+    use Test::Spec;
+
+    ${0};
+
+    describe '' => sub {
+        my ();
+
+        before all => sub {
+
+        };
+
+        before each => sub {
+
+        };
+
+        describe '' => sub {
+
+        };
+
+        context '' => sub {
+
+        };
+
+        it '' => sub {
+
+        };
+    };
+
+    runtests unless caller;
