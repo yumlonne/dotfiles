@@ -71,8 +71,8 @@ if has('lua')
 
     " for snippets
     let g:neosnippet#snippets_directory = "~/.vim/snippets"
-    imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-    smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+    imap <C-z>     <Plug>(neosnippet_expand_or_jump)
+    smap <C-z>     <Plug>(neosnippet_expand_or_jump)
 endif
 
 call plug#end()
