@@ -64,6 +64,15 @@ setopt inc_append_history
 bindkey "^R" history-incremental-search-backward
 bindkey "^S" history-incremental-search-forward
 
+# peco
+function peco-select-history() {
+  BUFFER=$(\history -n 1 | tac | peco)
+  CURSOR=$#BUFFER
+  zle clear-screen
+}
+zle -N peco-select-history
+bindkey '^r' peco-select-history
+
 export PATH="$HOME/bin:$PATH"
 
 # .zshrc.localがあればそっちも読み込む
