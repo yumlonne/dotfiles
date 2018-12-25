@@ -149,8 +149,8 @@ set smartindent " 改行時に前の行の構文をチェックし次の行の�
 set shiftwidth=4 " smartindentで増減する幅
 
 set hlsearch " 検索結果をハイライト
-" ESCキー2度押しでハイライトの切り替え
-nnoremap <silent><Esc><Esc> :<C-u>set nohlsearch!<CR>
+" Ctrl-hでハイライトの切り替え
+nnoremap <silent><C-h> :<C-u>set nohlsearch!<CR>
 
 set number " 行番号を表示
 set cursorline " カーソルラインをハイライト
