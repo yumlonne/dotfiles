@@ -1,0 +1,22 @@
+#!/usr/bin/perl
+
+while (my $line = <>) {
+    chomp $line;
+    my @objs = split /\t+/, $line;
+    my $json = '{';
+    for my $obj (@objs) {
+        my ($key, @value) = split /:/, $obj;
+        my $value = '';
+        $value .= "$_:" for @value;
+        $value =~ s/:$//;
+        if ($value =~ /^\d+$/) {
+            $json .= "\"$key\":$value";
+        }
+        else {
+            $json .= "\"$key\":\"$value\"";
+        }
+        $json .= ',';
+    }
+    $json =~ s/,$/}\n/;
+    print $json;
+}
