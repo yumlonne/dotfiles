@@ -1,7 +1,8 @@
 #!/usr/bin/perl
 
 while (my $line = <>) {
-    my @objs = split /\s+/, $line;
+    chomp $line;
+    my @objs = split /\t+/, $line;
     my $json = '{';
     for my $obj (@objs) {
         my ($key, @value) = split /:/, $obj;

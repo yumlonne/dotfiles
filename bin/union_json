@@ -1,0 +1,12 @@
+#!/usr/bin/perl
+
+my $str = "[";
+my $first = 1;
+while (my $json = <>) {
+    chomp $json;
+    $json = ",$json" if not $first;
+    $str .= $json;
+    $first = 0;
+}
+$str .= "]";
+print $str;
