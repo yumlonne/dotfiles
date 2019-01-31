@@ -31,6 +31,7 @@ Plug 'airblade/vim-gitgutter'   " HEADとの差分を表示
 Plug 'Shougo/unite.vim'         " Unite
 Plug 'kmnk/vim-unite-giti'      " Unite git plugin
 Plug 'tpope/vim-fugitive'       " vimからgitを使う
+Plug 'posva/vim-vue'            " Vue
 if has('lua')
     Plug 'Shougo/neocomplete.vim'      " コードの自動補完
     Plug 'Shougo/neosnippet'           " スニペットの自動補完

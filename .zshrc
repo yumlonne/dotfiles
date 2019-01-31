@@ -66,7 +66,7 @@ bindkey "^S" history-incremental-search-forward
 
 # peco
 function peco-select-history() {
-  BUFFER=$(\history -n 1 | tac | peco)
+  BUFFER=$(\history -n 1 | revl | peco)
   CURSOR=$#BUFFER
   zle clear-screen
 }
