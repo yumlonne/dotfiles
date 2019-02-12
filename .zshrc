@@ -64,7 +64,7 @@ setopt inc_append_history
 bindkey "^R" history-incremental-search-backward
 bindkey "^S" history-incremental-search-forward
 
-# peco
+# peco(global history)
 function peco-select-history() {
   BUFFER=$(\history -n 1 | revl | peco)
   CURSOR=$#BUFFER
@@ -72,6 +72,22 @@ function peco-select-history() {
 }
 zle -N peco-select-history
 bindkey '^r' peco-select-history
+
+# peco(dir history)
+function peco-select-dir-history() {
+  BUFFER=$(dh | revl | peco)
+  CURSOR=$#BUFFER
+  zle clear-screen
+}
+zle -N peco-select-dir-history
+bindkey '^t' peco-select-dir-history
+
+zshaddhistory() {
+    local line=${1%%$'\n'}
+    if [ $line != '\n' ]; then
+        echo $line >> .dir_history
+    fi
+}
 
 export PATH="$HOME/bin:$PATH"
 
