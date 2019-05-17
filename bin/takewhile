@@ -1,0 +1,8 @@
+#!/usr/bin/perl
+
+my $cond = shift @ARGV;
+my $code = eval "sub { $cond }";
+while (<>) {
+    last if not $code->();
+    print;
+}
