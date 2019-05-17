@@ -8,6 +8,7 @@ while (my $line = <>) {
         my ($key, @value) = split /:/, $obj;
         my $value = '';
         $value .= "$_:" for @value;
+        $value =~ s/"/\\"/g;
         $value =~ s/:$//;
         if ($value =~ /^\d+$/) {
             $json .= "\"$key\":$value";

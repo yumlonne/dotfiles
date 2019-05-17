@@ -21,7 +21,6 @@ Plug 'jistr/vim-nerdtree-tabs'  " nerdtreeをタブ間で共有
 Plug 'itchyny/lightline.vim'    " ステータスラインをいい感じに
 Plug 'itchyny/vim-gitbranch'    " ステータスラインにbranchを表示
 Plug 'bronson/vim-trailing-whitespace'  " 末尾の不要文字をハイライト
-Plug 'Yggdroot/indentLine'      " インデントを見やすく
 Plug 'cohama/lexima.vim'        " 対応する括弧等を自動補完
 Plug 'Shougo/unite.vim'         " Unite
 Plug 'mattn/emmet-vim'          " HTML等の入力を補助 <C-y>,
@@ -32,6 +31,7 @@ Plug 'Shougo/unite.vim'         " Unite
 Plug 'kmnk/vim-unite-giti'      " Unite git plugin
 Plug 'tpope/vim-fugitive'       " vimからgitを使う
 Plug 'posva/vim-vue'            " Vue
+Plug 'skanehira/translate.vim'      " gtran for vim
 if has('lua')
     Plug 'Shougo/neocomplete.vim'      " コードの自動補完
     Plug 'Shougo/neosnippet'           " スニペットの自動補完

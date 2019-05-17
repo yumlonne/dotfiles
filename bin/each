@@ -1,0 +1,8 @@
+#!/usr/bin/perl
+
+my $command = "@ARGV";
+warn $command;
+
+while (my $line = <STDIN>) {
+    print `echo '$line' | $command`;
+}
