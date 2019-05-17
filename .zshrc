@@ -79,15 +79,6 @@ function peco-select-dir-history() {
   CURSOR=$#BUFFER
   zle clear-screen
 }
-zle -N peco-select-dir-history
-bindkey '^t' peco-select-dir-history
-
-zshaddhistory() {
-    local line=${1%%$'\n'}
-    if [ $line != '\n' ]; then
-        echo $line >> .dir_history
-    fi
-}
 
 export PATH="$HOME/bin:$PATH"
 

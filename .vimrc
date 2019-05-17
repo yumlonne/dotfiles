@@ -32,6 +32,7 @@ Plug 'Shougo/unite.vim'         " Unite
 Plug 'kmnk/vim-unite-giti'      " Unite git plugin
 Plug 'tpope/vim-fugitive'       " vimからgitを使う
 Plug 'posva/vim-vue'            " Vue
+Plug 'udalov/kotlin-vim'        " kotlin
 if has('lua')
     Plug 'Shougo/neocomplete.vim'      " コードの自動補完
     Plug 'Shougo/neosnippet'           " スニペットの自動補完
