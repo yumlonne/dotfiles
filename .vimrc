@@ -33,6 +33,9 @@ Plug 'tpope/vim-fugitive'       " vimからgitを使う
 Plug 'posva/vim-vue'            " Vue
 Plug 'skanehira/translate.vim'      " gtran for vim
 Plug 'udalov/kotlin-vim'        " kotlin
+Plug 'elmcast/elm-vim'          " elm
+let g:elm_setup_keybindings = 0 " keybindingを使用しない
+let g:elm_format_autosave = 0   " 保存時に自動でelm-formatをかけない
 if has('lua')
     Plug 'Shougo/neocomplete.vim'      " コードの自動補完
     Plug 'Shougo/neosnippet'           " スニペットの自動補完
@@ -109,6 +112,9 @@ inoremap <C-h> <Left>
 inoremap <C-j> <Down>
 inoremap <C-k> <Up>
 inoremap <C-l> <Right>
+
+" Ale
+nnoremap <silent> <C-a> :<C-u>:ALEDetail<CR>
 
 " statusline設定
 let g:lightline = {
@@ -206,3 +212,6 @@ augroup vimrc-auto-mkdir  " {{{
     endif
   endfunction  " }}}
 augroup END  " }}}
+
+" ftplugin
+autocmd BufRead,BufNewFile *.elm setfiletype elm
