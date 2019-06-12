@@ -1,0 +1,231 @@
+#!/usr/bin/env perl
+use feature 'say';
+
+my $type = shift @ARGV;
+
+# main
+$type->();
+
+
+# Helper
+sub lift {
+    my $expr = shift;
+    return sub { eval $expr };
+}
+
+# Basic functions
+
+sub head {
+    my $result = <>;
+    print $result;
+}
+
+sub last {
+    my @inputs = <>;
+    print $inputs[-1];
+}
+
+sub tail {
+    <>;
+    print <>;
+}
+
+sub init {
+    my $elem = <>;
+    while (my $tmp = <>) {
+        print $elem;
+        $elem = $tmp;
+    }
+}
+
+sub length {
+    my @inputs = <>;
+    print scalar @inputs;
+}
+
+sub map {
+    my $mapf = shift @ARGV;
+    while (<>) {
+        chomp;
+        say lift($mapf)->();
+    }
+}
+
+sub reverse {
+    print for reverse <>;
+}
+
+sub intersperse {
+    my $str = shift @ARGV;
+    for (<>) {
+        print;
+        say $str;
+    }
+}
+
+# Reducing lists (folds)
+
+sub foldl {
+    require List::Util;
+    my $f = lift(shift @ARGV);
+    my $acc = shift @ARGV;
+    my @inputs = <>;
+
+    say List::Util::reduce($f, $acc, @inputs);
+}
+
+# TODO foldr
+
+sub any {
+    require List::Util;
+    my $p = lift(shift @ARGV);
+    my @inputs = <>;
+
+    say List::Util::any($p, @inputs) ? '1' : '0';
+}
+
+sub all {
+    require List::Util;
+    my $p = lift(shift @ARGV);
+    my @inputs = <>;
+
+    say List::Util::all($p, @inputs) ? '1' : '0';
+}
+
+# Building lists
+
+sub scanl {
+    my $f = lift(shift @ARGV);
+    my $acc = shift @ARGV;
+
+    for (<>) {
+        chomp;
+        say $acc;
+        local ($a, $b) = ($acc, $_);
+        $acc = $f->();
+    }
+    say $acc;
+}
+
+# Infrate lists
+
+sub iterate {
+    my $f = lift(shift @ARGV);
+    my $v = shift @ARGV;
+
+    while (1) {
+        say $v;
+        local $_ = $v;
+        $v = $f->();
+    }
+}
+
+sub repeat {
+    my $v = shift @ARGV;
+    while (1) { say $v; }
+}
+
+sub replicate {
+    my $n = shift @ARGV;
+    my $v = shift @ARGV;
+    for (1..$n) {
+        say $v;
+    }
+}
+
+sub cycle {
+    my @inputs = <>;
+    while (1) {
+        print @inputs;
+    }
+}
+
+# Sublists
+
+sub take {
+    my $n = shift @ARGV;
+    for (1..$n) {
+        my $input = <>;
+        print $input;
+    }
+}
+
+sub drop {
+    my $n = shift @ARGV;
+    for (1..$n) {
+        <>;
+    }
+    print while <>;
+}
+
+sub takeWhile {
+    my $p = lift(shift @ARGV);
+    while (<>) {
+        last if not $p->();
+        print;
+    }
+}
+
+sub dropWhile {
+    my $p = lift(shift @ARGV);
+    while (<>) {
+        next if $p->();
+        print;
+        last;
+    }
+    print while <>;
+}
+
+# Searching with a predicate
+
+sub find {
+    my $p = lift(shift @ARGV);
+    while (<>) {
+        next if not $p->();
+        print;
+        last;
+    }
+}
+
+sub filter {
+    my $p = lift(shift @ARGV);
+    while (<>) {
+        print if $p->();
+    }
+}
+
+sub bangbang {
+    my $n = shift @ARGV;
+    for (1..$n) {
+        <>;
+    }
+    my $elem = <>;
+    print $elem;
+}
+
+sub findIndex {
+    my $p = lift(shift @ARGV);
+    my $idx = 0;
+
+    while (<>) {
+        if ($p->()) {
+            say $idx;
+            last;
+        }
+        else {
+            $idx++;
+        }
+    }
+}
+
+sub findIndices {
+    my $p = lift(shift @ARGV);
+    my $idx = 0;
+
+    while (<>) {
+        say $idx if $p->();
+        $idx++;
+    }
+}
+
+
