@@ -4,7 +4,7 @@ use Term::ANSIColor;
 my $reset = color('reset');
 
 while (<STDIN>) {
-    my $color = color('yellow');
+    my $color = color('red bold');
     for my $elem (@ARGV) {
         $elem =~ s/^-c=?(.*)$/--color=$1/;
         if ($elem =~ /--color=('")?(.*)('")?/) {
