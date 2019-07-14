@@ -35,7 +35,7 @@ Plug 'skanehira/translate.vim'      " gtran for vim
 Plug 'udalov/kotlin-vim'        " kotlin
 Plug 'elmcast/elm-vim'          " elm
 let g:elm_setup_keybindings = 0 " keybindingを使用しない
-let g:elm_format_autosave = 0   " 保存時に自動でelm-formatをかけない
+
 if has('lua')
     Plug 'Shougo/neocomplete.vim'      " コードの自動補完
     Plug 'Shougo/neosnippet'           " スニペットの自動補完
@@ -57,8 +57,11 @@ if has('lua')
     let g:neocomplete#auto_completion_start_length = 1
 
     " Plugin key-mappings.
-    inoremap <expr><C-g>     neocomplete#undo_completion()
-    inoremap <expr><C-l>     neocomplete#complete_common_string()
+    "inoremap <expr><C-g>     neocomplete#undo_completion()
+    "inoremap <expr><C-k>     neocomplete#complete_common_string()
+    imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+    smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+    xmap <C-k>     <Plug>(neosnippet_expand_target)
 
     " Recommended key-mappings.
     " <CR>: close popup and save indent.
@@ -108,10 +111,10 @@ nnoremap <silent> <C-i><C-g>s :<C-u>Unite giti/status<CR>
 nnoremap <silent> <C-i><C-g>l :<C-u>Unite giti/log<CR>
 
 " INSERTモードでC-[hjkl]で移動できるようにする
-inoremap <C-h> <Left>
-inoremap <C-j> <Down>
-inoremap <C-k> <Up>
-inoremap <C-l> <Right>
+"inoremap <C-h> <Left>
+"inoremap <C-j> <Down>
+"inoremap <C-k> <Up>
+"inoremap <C-l> <Right>
 
 " Ale
 nnoremap <silent> <C-a> :<C-u>:ALEDetail<CR>
