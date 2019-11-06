@@ -51,6 +51,16 @@ sub map {
     }
 }
 
+sub mapWithIndex {
+    my $mapf = shift @ARGV;
+    my $idx = 0;
+    while (<>) {
+        chomp;
+        local $_ = [$idx++, $_];
+        say lift($mapf)->();
+    }
+}
+
 sub reverse {
     print for reverse <>;
 }
